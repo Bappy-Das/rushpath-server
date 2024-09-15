@@ -32,33 +32,35 @@ async function run() {
         });
         console.log("conncect in async")
         const database = client.db("resupath");
-        // const orderCollection = database.collection("downloaders");
         const downloaderCollection = database.collection("downloaders");
 
-
-        // check and update the downloader
-        app.get('/create-update-downloader', async (req, res) => {
-            try {
+        app.post('/create-update-downloader', async (req, res) => {
+          try {
               const count = await downloaderCollection.countDocuments();
               if (count > 0) {
-                const data = await downloaderCollection.find({}).toArray();
-                const countdata=data[0].totalDownload;
-                const result = await downloaderCollection.updateOne({}, { $set: { 'totalDownload': countdata + 1 } });
-                res.json({ 
-                    hasData: true, 
-                    message: 'Collection has updata and count incremented', 
-                });
+                  const data = await downloaderCollection.find({}).toArray();
+                  const countData = data[0].totalDownload;
+                  const result = await downloaderCollection.updateOne({}, { $set: { 'totalDownload': countData + 1 } });
+                  res.json({ 
+                      hasData: true, 
+                      message: 'Collection updated and count incremented', 
+                      result
+                  });
               } else {
-                const order = req.body;
-                order.totalDownload = 1;
-                const result = await downloaderCollection.insertOne(order)
-                res.json({result,order})
+                  const order = req.body;
+                  order.totalDownload = 1;
+                  const result = await downloaderCollection.insertOne(order);
+                  res.json({ 
+                      hasData: false, 
+                      message: 'New record created', 
+                      result 
+                  });
               }
-            } catch (err) {
+          } catch (err) {
               console.error('Error checking collection:', err);
               res.status(500).send('Internal Server Error');
-            }
-          });
+          }
+      });
 
         // get full count of downloads
           app.get('/total-downloader', async (req, res) => {
