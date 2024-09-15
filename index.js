@@ -24,7 +24,8 @@ async function run() {
                 console.error('Error labels:', Array.from(err[Symbol.for('errorLabels')]));
 
                 process.exit(1);
-            } else {
+            } 
+            else {
                 app.listen(port, () => {
                     console.log(`🚀 App listening on port http://localhost:${port}`);
                 });
