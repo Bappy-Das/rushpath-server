@@ -16,21 +16,20 @@ const client = new MongoClient(uri, { useNewUrlParser: true, useUnifiedTopology:
 
 async function run() {
     try {
-        // await client.connect();
-        await client.connect((err) => {
-            if (err) {
-                console.error('Error connecting to MongoDB:', err);
-                console.error('Error details:', err.codeName, err.code, err.codeName);
-                console.error('Error labels:', Array.from(err[Symbol.for('errorLabels')]));
+        // await client.connect((err) => {
+        //     if (err) {
+        //         console.error('Error connecting to MongoDB:', err);
+        //         console.error('Error details:', err.codeName, err.code, err.codeName);
+        //         console.error('Error labels:', Array.from(err[Symbol.for('errorLabels')]));
 
-                process.exit(1);
-            } 
-            else {
-                app.listen(port, () => {
-                    console.log(`🚀 App listening on port http://localhost:${port}`);
-                });
-            }
-        });
+        //         process.exit(1);
+        //     } 
+        //     else {
+        //         app.listen(port, () => {
+        //             console.log(`🚀 App listening on port http://localhost:${port}`);
+        //         });
+        //     }
+        // });
         console.log("conncect in async")
         const database = client.db("resupath");
         const downloaderCollection = database.collection("downloaders");
